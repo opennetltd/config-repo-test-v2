@@ -1,0 +1,130 @@
+# UAT environment global defaults
+application:
+  environment: uat
+  version: @build.version@
+  mysql:
+    upgrade: true
+
+# Deployment indicators
+sporty:
+  deployment:
+    code: UAT_${COUNTRY_SHORT_CODE}
+  rollout:
+    branch: develop
+
+# UAT database settings
+spring:
+  datasource:
+    master:
+      maximum-pool-size: 100
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 30000
+    slave:
+      maximum-pool-size: 100
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 30000
+      read-only: true
+  # Redis UAT settings
+  redis:
+    multi:
+      cluster:
+        enabled: true
+        redisson:
+          enabled: true
+        provider: lettuce
+        lettuce:
+          command-timeout: PT3S
+          pool:
+            enabled: true
+            max-active: 256
+            min-idle: 8
+            max-idle: 128
+        target-mode: standalone
+        target:
+          master:
+            nodes: ${REDIS_HOST}:6379
+          slave:
+            nodes: ${REDIS_RO_HOST}:6379
+  # Upload limits for UAT
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
+
+# Server settings
+server:
+  port: 8080
+  tomcat:
+    threads:
+      min-spare: 250
+      max: 512
+    max-http-form-post-size: 20MB
+    mbeanregistry:
+      enabled: true
+    accesslog:
+      redirect:
+        enabled: true
+        pattern: "[%{yyyy-MM-dd HH:mm:ss.S z}t] %m %U \"%q\" %s %D %b %{X-B3-TraceId}i,%{X-B3-SpanId}i %{X-Real-IP}i %{Referer}i \"%{User-Agent}i\" %{Platform}i %l %u %I %v %a"
+
+# Management and monitoring
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: metrics,prometheus,health,info,heapdump,threaddump
+  metrics:
+    distribution:
+      slo:
+        http:
+          server:
+            requests: 1ms,5ms,15ms,50ms,100ms,500ms,1s,8s,20s
+
+# OpenTracing
+opentracing:
+  jaeger:
+    http-sender:
+      url: ${JAEGER_HTTP_SENDER_URL}
+    log-spans: false
+    enable-b3-propagation: true
+    probabilistic-sampler:
+      sampling-rate: ${OPENTRACING_JAEGER_SAMPLING_RATE:0.01}
+
+# API documentation (enabled in UAT)
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
+# Messaging configuration
+easymq:
+  nameserver: ${EASYMQ_NAMESERVER}
+  consumer:
+    consumertimeoutminutes: 1
+    groupname: consumerGroup_afbet_global_uat
+    scanpackage: com.xyzbet.afbet
+  producer:
+    groupname: producerGroup_afbet_global_uat
+    topicqueuenums: 8
+    sendmsgtimeoutmillis: 3000
+    count: 10
+    max:
+      retry:
+        times: 5
+
+# Common URLs for UAT
+chat:
+  url: https://sportychat.api.uat.sportybet2.com
+
+news:
+  url: http://sporty-news.uat.sportybet2.com
+
+# Logging levels
+logging:
+  level:
+    root: INFO
+    com.xyzbet.afbet: DEBUG

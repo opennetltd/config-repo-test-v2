@@ -1,0 +1,43 @@
+# Kenya-specific UAT environment configuration
+country:
+  short:
+    code: ke
+  display:
+    name: Kenya
+
+# Country-specific deployment
+sporty:
+  deployment:
+    available-countries: ke
+
+# Country-specific URLs
+sportyGlobal:
+  api:
+    url: https://sporty-global-ke.uat.sportybet2.com
+
+# Kenya-specific settings
+sporty_bet:
+  country_code: KE
+
+social:
+  new:
+    follower:
+      notification:
+        available:
+          country: ke
+
+# Kenya-specific payment providers for UAT
+payment:
+  providers:
+    mpesa:
+      enabled: true
+      test-mode: true
+    equity:
+      enabled: true
+      test-mode: true
+    airtel:
+      enabled: true
+      test-mode: true
+    
+  gateway:
+    url: https://payment-gateway-ke.uat.sportybet2.com

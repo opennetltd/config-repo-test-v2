@@ -1,0 +1,46 @@
+# Nigeria-specific UAT environment configuration
+country:
+  short:
+    code: ng
+  display:
+    name: Nigeria
+
+# Country-specific deployment
+sporty:
+  deployment:
+    available-countries: ng
+
+# Country-specific URLs
+sportyGlobal:
+  api:
+    url: https://sporty-global-ng.uat.sportybet2.com
+
+# Nigeria-specific settings
+sporty_bet:
+  country_code: NG
+
+social:
+  new:
+    follower:
+      notification:
+        available:
+          country: ng
+
+# Nigeria-specific payment providers for UAT
+payment:
+  providers:
+    flutterwave:
+      enabled: true
+      test-mode: true
+    paystack:
+      enabled: true
+      test-mode: true
+    monnify:
+      enabled: true
+      test-mode: true
+    opay:
+      enabled: true
+      test-mode: true
+    
+  gateway:
+    url: https://payment-gateway-ng.uat.sportybet2.com

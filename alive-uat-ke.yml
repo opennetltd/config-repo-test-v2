@@ -1,0 +1,19 @@
+# Kenya-specific UAT configuration for alive service
+config-server-check: properties_from_config_server_alvket
+
+# Kenya-specific alive service settings for UAT
+alive:
+  push:
+    message:
+      filters:
+        country: ke
+    notification:
+      timeout-ms: 5000
+      batch-size: 100
+  connection:
+    idle-timeout-seconds: 300
+  
+  # Extra debugging for UAT Kenya environment
+  debug:
+    connection-events: true
+    message-processing: true

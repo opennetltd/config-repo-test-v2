@@ -1,0 +1,54 @@
+# UAT-specific configuration for alive service
+alive:
+  rocketmq:
+    enable: true
+    nameserver: ${EASYMQ_NAMESERVER}
+    consumer:
+      # [push.message.enabled] deprecated, to be deleted
+      push:
+        message:
+          enabled: true
+      group:
+        message:
+          enabled: true
+          subscribe-topic: afbet_alive_push_message
+          consumer-group: afbet_alive_push_message_consumer
+          message-model: BROADCASTING
+          consume-thread-max: 32
+          consume-message-batch-max-size: 16
+      individual:
+        message:
+          enabled: true
+          subscribe-topic: afbet_alive_push_individual_message
+          consumer-group: afbet_alive_push_individual_message_consumer
+          message-model: CLUSTERING
+          consume-thread-max: 32
+          consume-message-batch-max-size: 16
+      disconnect:
+        enabled: true
+        subscribe-topic: afbet_alive_disconnect
+        consumer-group: afbet_alive_disconnect_consumer
+        message-model: BROADCASTING
+        consume-thread-max: 32
+        consume-message-batch-max-size: 16
+
+  # UAT-specific feature toggles
+  push:
+    enable: true
+    thread-pool:
+      core-size: 16
+      max-size: 64
+      queue-capacity: 500
+    
+  # Connection health monitoring
+  connection:
+    health:
+      monitor:
+        enabled: true
+        check-interval-ms: 60000
+
+# UAT-specific logging
+logging:
+  level:
+    com.netease.alive: DEBUG
+    matchPubGroupLog: DEBUG
