@@ -11,13 +11,6 @@ This document outlines the approach taken to restructure the Spring Cloud Config
 
 ## Example: Alive Service
 
-### Before Restructuring
-
-- Common configuration in `config-repo-common/services/alive.yml`
-- Country-specific configuration mixed across repositories
-- Environment-specific configuration contained duplicate settings
-- Test + Country configuration had no clear organization
-
 ### After Restructuring
 
 #### Base Layers (config-repo-common)
