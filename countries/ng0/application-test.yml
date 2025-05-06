@@ -1,0 +1,33 @@
+# Nigeria-0 specific test environment configuration
+country:
+  short:
+    code: ng0
+  display:
+    name: Nigeria 0
+
+# Country-specific deployment
+sporty:
+  deployment:
+    available-countries: ng0
+
+# Country-specific URLs
+sportyGlobal:
+  api:
+    url: https://sporty-global-ng0.uat.sportybet2.com
+
+# Nigeria-0 specific settings
+sporty_bet:
+  country_code: NG0
+
+# Nigeria-0 specific payment providers for UAT
+payment:
+  providers:
+    flutterwave:
+      enabled: true
+      test-mode: true
+    paystack:
+      enabled: true
+      test-mode: true
+    
+  gateway:
+    url: https://payment-gateway-ng0.uat.sportybet2.com

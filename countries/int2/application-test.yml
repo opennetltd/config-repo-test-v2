@@ -1,0 +1,30 @@
+# Integration-2 specific test environment configuration
+country:
+  short:
+    code: int2
+  display:
+    name: Integration 2
+
+# Country-specific deployment
+sporty:
+  deployment:
+    available-countries: int2
+
+# Country-specific URLs
+sportyGlobal:
+  api:
+    url: https://sporty-global-int2.uat.sportybet2.com
+
+# Integration-2 specific settings
+sporty_bet:
+  country_code: INT2
+
+# Integration-2 specific payment providers for UAT
+payment:
+  providers:
+    testprovider:
+      enabled: true
+      test-mode: true
+    
+  gateway:
+    url: https://payment-gateway-int2.uat.sportybet2.com

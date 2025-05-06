@@ -1,0 +1,15 @@
+# Test environment messaging configuration
+easymq:
+  nameserver: ${EASYMQ_NAMESERVER}
+  consumer:
+    consumertimeoutminutes: 1
+    groupname: consumerGroup_afbet_global_uat
+    scanpackage: com.xyzbet.afbet
+  producer:
+    groupname: producerGroup_afbet_global_uat
+    topicqueuenums: 8
+    sendmsgtimeoutmillis: 3000
+    count: 10
+    max:
+      retry:
+        times: 5

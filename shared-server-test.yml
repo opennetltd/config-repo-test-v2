@@ -1,0 +1,14 @@
+# Test environment server settings
+server:
+  port: 8080
+  tomcat:
+    threads:
+      min-spare: 250
+      max: 512
+    max-http-form-post-size: 20MB
+    mbeanregistry:
+      enabled: true
+    accesslog:
+      redirect:
+        enabled: true
+        pattern: "[%{yyyy-MM-dd HH:mm:ss.S z}t] %m %U \"%q\" %s %D %b %{X-B3-TraceId}i,%{X-B3-SpanId}i %{X-Real-IP}i %{Referer}i \"%{User-Agent}i\" %{Platform}i %l %u %I %v %a"

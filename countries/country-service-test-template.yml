@@ -1,0 +1,23 @@
+# Template for country-specific test environment configurations
+# This template defines the common structure for all country-specific test settings
+# Individual country test files should only override values that differ from this template
+
+# Configuration verification marker
+# config-server-check: properties_from_config_server_alv${country.short.code}t
+
+# Country-specific test environment settings
+alive:
+  # Notification settings for test environment - common across countries
+  push:
+    notification:
+      timeout-ms: 5000     # Standard test timeout
+      batch-size: 100      # Standard batch size
+  
+  # Standard test connection settings
+  connection:
+    idle-timeout-seconds: 300  # Default test timeout
+  
+  # Standard debug flags for test environment
+  debug:
+    connection-events: true     # Standard test debug flag
+    message-processing: true    # Standard test debug flag

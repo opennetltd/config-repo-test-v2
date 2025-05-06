@@ -1,0 +1,16 @@
+# Ghana-specific test environment configuration for alive service
+# Inherits from the country-service-test-template.yml
+# Only contains settings that differ from the template and other base configurations
+
+# Configuration verification marker (country-specific)
+config-server-check: properties_from_config_server_alvght
+
+# Ghana-specific test environment settings
+alive:
+  # Ghana has a unique requirement for higher timeouts in test
+  connection:
+    idle-timeout-seconds: 400  # Ghana-specific override different from the template's 300
+  
+  # Ghana-specific debugging settings
+  debug:
+    topic-processing: true  # Ghana-specific debug flag not in the template

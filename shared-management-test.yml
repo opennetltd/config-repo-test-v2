@@ -1,0 +1,31 @@
+# Test environment management endpoints and monitoring
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: metrics,prometheus,health,info,heapdump,threaddump
+  metrics:
+    distribution:
+      slo:
+        http:
+          server:
+            requests: 1ms,5ms,15ms,50ms,100ms,500ms,1s,8s,20s
+
+# OpenTracing configuration for UAT
+opentracing:
+  jaeger:
+    http-sender:
+      url: ${JAEGER_HTTP_SENDER_URL}
+    log-spans: false
+    enable-b3-propagation: true
+    probabilistic-sampler:
+      sampling-rate: ${OPENTRACING_JAEGER_SAMPLING_RATE:0.01}
+
+# API documentation (enabled in UAT)
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

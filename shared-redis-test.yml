@@ -1,0 +1,23 @@
+# Test environment Redis settings
+# Overrides settings from config-repo-common/shared-redis.yml
+spring:
+  redis:
+    multi:
+      cluster:
+        enabled: true
+        redisson:
+          enabled: true
+        provider: lettuce
+        lettuce:
+          command-timeout: PT3S
+          pool:
+            enabled: true
+            max-active: 256  # Reduced from 512 in base config
+            min-idle: 8      # Reduced from 16 in base config
+            max-idle: 128    # Reduced from 256 in base config
+        target-mode: standalone
+        target:
+          master:
+            nodes: ${REDIS_HOST}:6379
+          slave:
+            nodes: ${REDIS_RO_HOST}:6379

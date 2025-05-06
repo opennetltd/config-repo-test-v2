@@ -1,0 +1,16 @@
+# Test environment database connection settings
+# Overrides settings from config-repo-common/shared-datasource.yml
+spring:
+  datasource:
+    # Reduced pool sizes for UAT environment
+    master:
+      maximum-pool-size: 100  # Reduced from 200 in base config
+      minimum-idle: 10        # Reduced from 20 in base config
+      connection-timeout: 30000
+      idle-timeout: 30000
+    slave:
+      maximum-pool-size: 100  # Reduced from 200 in base config
+      minimum-idle: 10        # Reduced from 20 in base config
+      connection-timeout: 30000
+      idle-timeout: 30000
+      read-only: true

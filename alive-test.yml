@@ -1,0 +1,35 @@
+# UAT-specific configuration for alive service
+# Only contains settings that differ from the common configuration
+
+alive:
+  # Reduced thread counts for test environment
+  rocketmq:
+    consumer:
+      group:
+        message:
+          consume-thread-max: 32  # Reduced from 64 in base config
+      individual:
+        message:
+          consume-thread-max: 32  # Reduced from 64 in base config
+      disconnect:
+        consume-thread-max: 32    # Reduced from 64 in base config
+
+  # Test-specific push thread pool settings
+  push:
+    thread-pool:
+      core-size: 16              # Reduced from 32 in base config
+      max-size: 64               # Reduced from 128 in base config
+      queue-capacity: 500        # Reduced from 1000 in base config
+    
+  # Connection health monitoring (test environment only)
+  connection:
+    health:
+      monitor:
+        enabled: true            # Test-specific setting
+        check-interval-ms: 60000 # Test-specific setting
+
+# Test-specific logging
+logging:
+  level:
+    com.netease.alive: DEBUG     # Enhanced logging for test environment
+    matchPubGroupLog: DEBUG

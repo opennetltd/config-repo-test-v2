@@ -1,0 +1,33 @@
+# Nigeria-3 specific test environment configuration
+country:
+  short:
+    code: ng3
+  display:
+    name: Nigeria 3
+
+# Country-specific deployment
+sporty:
+  deployment:
+    available-countries: ng3
+
+# Country-specific URLs
+sportyGlobal:
+  api:
+    url: https://sporty-global-ng3.uat.sportybet2.com
+
+# Nigeria-3 specific settings
+sporty_bet:
+  country_code: NG3
+
+# Nigeria-3 specific payment providers for UAT
+payment:
+  providers:
+    flutterwave:
+      enabled: true
+      test-mode: true
+    paystack:
+      enabled: true
+      test-mode: true
+    
+  gateway:
+    url: https://payment-gateway-ng3.uat.sportybet2.com

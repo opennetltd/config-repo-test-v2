@@ -1,0 +1,45 @@
+# UAT environment global defaults
+# This file includes common settings for the test environment
+# and includes shared configuration files to reduce duplication
+
+# Import shared configurations (these are test-specific overrides of base configs)
+spring:
+  config:
+    import:
+      - shared-datasource-test.yml
+      - shared-redis-test.yml
+      - shared-server-test.yml
+      - shared-management-test.yml
+      - shared-messaging-test.yml
+  # Upload limits for UAT
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
+
+# Application identification
+application:
+  environment: uat
+  version: @build.version@
+  mysql:
+    upgrade: true
+
+# Deployment indicators
+sporty:
+  deployment:
+    code: UAT_${COUNTRY_SHORT_CODE}
+  rollout:
+    branch: develop
+
+# Common URLs for UAT
+chat:
+  url: https://sportychat.api.uat.sportybet2.com
+
+news:
+  url: http://sporty-news.uat.sportybet2.com
+
+# Logging levels
+logging:
+  level:
+    root: INFO
+    com.xyzbet.afbet: DEBUG
