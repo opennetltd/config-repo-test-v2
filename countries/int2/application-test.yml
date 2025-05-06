@@ -1,9 +1,9 @@
-# Integration-2 specific test environment configuration
+# int2 specific test environment configuration
 country:
   short:
     code: int2
   display:
-    name: Integration 2
+    name: int2
 
 # Country-specific deployment
 sporty:
@@ -15,11 +15,11 @@ sportyGlobal:
   api:
     url: https://sporty-global-int2.uat.sportybet2.com
 
-# Integration-2 specific settings
+# int2 specific settings
 sporty_bet:
-  country_code: INT2
+  country_code: int2
 
-# Integration-2 specific payment providers for UAT
+# int2 specific payment providers for UAT
 payment:
   providers:
     testprovider:
