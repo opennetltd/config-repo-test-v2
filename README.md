@@ -105,7 +105,7 @@ To verify the correct property resolution, Spring Cloud Config provides several 
 This repository supports both standard country codes and country variants:
 
 - **Standard countries**: ng (Nigeria), ke (Kenya), gh (Ghana), etc.
-- **Integration environments**: int, int1, int2, int3
+- **INT environments**: int, int1, int2, int3
 - **Nigeria variants**: ng0, ng1, ng2, ng3, ng4, ng5
 
 Each country variant is treated as a separate "country" with its own directory structure:
