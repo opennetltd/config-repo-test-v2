@@ -2,40 +2,66 @@
 
 This repository contains UAT environment-specific configurations for Spring Cloud Config, restructured to use the layered approach (Base + Overrides/Overlays)
 
+## Repository Relationship
+
+This repository contains only test-environment specific configurations. Base defaults come from:
+
+- **Base Configuration Repository**: [config-repo-common](https://github.com/opennetltd/config-repo-common)
+  - Contains global defaults, service defaults, and country defaults
+  - Used across all environments (test, staging, production)
+
 ## Directory Structure
 
-- `application-test.yml` - Global UAT settings for all services and countries
-- `{service}-test.yml` - Service-specific UAT settings (e.g., `alive-test.yml`)
-- `shared-*-test.yml` - Shared configuration modules for specific subsystems (database, Redis, etc.)
-- `countries/` - Country-specific configurations
-  - `country-service-test-template.yml` - Template for country-specific service configurations
-  - `countries/{country}/application-test.yml` - Country-specific UAT settings
-  - `countries/{country}/{service}-test.yml` - Country+Service-specific UAT settings (only for actual overrides)
+- `/application-test.yml` - Global UAT settings for all services and countries
+- `/{service}-test.yml` - Service-specific UAT settings (e.g., `/alive-test.yml`)
+- `/shared-*-test.yml` - Shared configuration modules for specific subsystems
+- `/countries/` - Country-specific configurations
+  - `/countries/country-service-test-template.yml` - Template for country-specific service configurations
+  - `/countries/{country}/application-test.yml` - Country-specific UAT settings
+  - `/countries/{country}/{service}-test.yml` - Country+Service-specific UAT settings (only for actual overrides)
 
 ## Shared Configuration Files
 
 To reduce duplication, we've extracted common subsystem configurations into shared files:
 
-- `shared-datasource-test.yml` - Database connection settings for the test environment
-- `shared-redis-test.yml` - Redis configuration for the test environment
-- `shared-server-test.yml` - Server and Tomcat settings for the test environment
-- `shared-management-test.yml` - Monitoring and API endpoints for the test environment
-- `shared-messaging-test.yml` - Messaging system settings for the test environment
+- `/shared-datasource-test.yml` - Database connection settings for the test environment
+- `/shared-redis-test.yml` - Redis configuration for the test environment
+- `/shared-server-test.yml` - Server and Tomcat settings for the test environment
+- `/shared-management-test.yml` - Monitoring and API endpoints for the test environment
+- `/shared-messaging-test.yml` - Messaging system settings for the test environment
 
 These shared files are imported by `application-test.yml` and contain only the test-specific overrides of the base configurations in config-repo-common.
 
 ## Configuration Layering
 
 Spring Cloud Config resolves properties in this order:
-1. Global defaults from config-repo-common/application.yml
-2. Service defaults from config-repo-common/services/{service}.yml
-3. Country defaults from config-repo-common/countries/application-{country}.yml
-4. Country+Service defaults from config-repo-common/countries/{country}/{service}.yml
-5. **Shared configurations** from config-repo-test-v2/shared-*-test.yml (imported by application-test.yml)
-6. Environment defaults from config-repo-test-v2/application-test.yml
-7. Environment+Country settings from config-repo-test-v2/countries/{country}/application-test.yml
-8. Service+Environment settings from config-repo-test-v2/{service}-test.yml
-9. Country+Service+Environment settings from config-repo-test-v2/countries/{country}/{service}-test.yml
+1. Global defaults from **config-repo-common**/application.yml
+2. Service defaults from **config-repo-common**/services/{service}.yml
+3. Country defaults from **config-repo-common**/countries/application-{country}.yml
+4. Country+Service defaults from **config-repo-common**/countries/{country}/{service}.yml
+5. **Shared configurations** from **config-repo-test-v2**/shared-*-test.yml (imported by application-test.yml)
+6. Environment defaults from **config-repo-test-v2**/application-test.yml
+7. Environment+Country settings from **config-repo-test-v2**/countries/{country}/application-test.yml
+8. Service+Environment settings from **config-repo-test-v2**/{service}-test.yml
+9. Country+Service+Environment settings from **config-repo-test-v2**/countries/{country}/{service}-test.yml
+
+## Related Repository File Paths
+
+### config-repo-common (Base configurations)
+- `/application.yml` - Global defaults for all environments and countries
+- `/services/{service}.yml` - Service-specific defaults (e.g., `/services/alive.yml`)
+- `/shared-*.yml` - Shared subsystem configurations (e.g., `/shared-datasource.yml`)
+- `/countries/application-{country}.yml` - Country-specific defaults
+- `/countries/country-service-base.yml` - Template for all country-service configs
+- `/countries/{country}/{service}.yml` - Country+Service specific settings
+
+### config-repo-test-v2 (Test environment configurations)
+- `/application-test.yml` - Test environment global settings
+- `/{service}-test.yml` - Test-specific service settings
+- `/shared-*-test.yml` - Test-specific shared subsystem settings
+- `/countries/country-service-test-template.yml` - Template for test country configs
+- `/countries/{country}/application-test.yml` - Country-specific test settings
+- `/countries/{country}/{service}-test.yml` - Country+Service test specifics
 
 ### Verification of Property Resolution
 
@@ -56,15 +82,15 @@ To verify the correct property resolution, Spring Cloud Config provides several 
    ```
 
 4. **Resolution example**: For the alive service in Ghana's test environment, properties would resolve in this order:
-   - Base defaults (configuration properties for all services)
-   - alive service defaults (RocketMQ settings, thread pool defaults)
-   - Ghana defaults (country code, language, timezone) 
-   - Ghana + alive defaults (country-specific topic settings)
-   - Shared test settings (database, Redis configurations)
-   - Test environment defaults (test-specific thread pool settings)
-   - Ghana + test settings (Ghana-specific test environment settings)
-   - alive + test settings (reduced thread counts, debug logging)
-   - Ghana + alive + test settings (Ghana-specific connection timeout overrides)
+   - Base defaults (**config-repo-common**/application.yml)
+   - alive service defaults (**config-repo-common**/services/alive.yml)
+   - Ghana defaults (**config-repo-common**/countries/application-gh.yml) 
+   - Ghana + alive defaults (**config-repo-common**/countries/gh/alive.yml)
+   - Shared test settings (**config-repo-test-v2**/shared-*.yml)
+   - Test environment defaults (**config-repo-test-v2**/application-test.yml)
+   - Ghana + test settings (**config-repo-test-v2**/countries/gh/application-test.yml)
+   - alive + test settings (**config-repo-test-v2**/alive-test.yml)
+   - Ghana + alive + test settings (**config-repo-test-v2**/countries/gh/alive-test.yml)
 
 ## Configuration Principles
 
